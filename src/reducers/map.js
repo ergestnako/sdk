@@ -1,50 +1,47 @@
 import {MAP} from '../actions/ActionTypes';
-export default (state = [], action) => {
+
+const default_view = {
+  center: [0, 0],
+  zoom: 0,
+  extent: [0, 0, 0, 0]
+};
+
+export default (state = default_view, action) => {
   switch (action.type) {
     case  MAP.GET_CONFIG:
       return action.mapState;
     case  MAP.SET_VIEW:
       return {
         ...state,
-        view:{
-          ...state.view,
-          center:action.center,
-          zoom:action.zoom
-        }
+        center:action.center,
+        zoom:action.zoom
       };
     case  MAP.SET_CENTER:
       return {
         ...state,
-        view:{
-          ...state.view,
-          center:action.center
-        }
+        center:action.center
       };
     case  MAP.SET_ZOOM:
       return {
         ...state,
-        view:{
-          ...state.view,
-          zoom:action.zoom
-        }
+        zoom:action.zoom
+      };
+    case  MAP.SET_EXTENT:
+      return {
+        ...state,
+        extent:action.extent
       };
     case MAP.ZOOM_IN:
     //TODO:Check MaxZoom
       return {
         ...state,
-        view:{
-          ...state.view,
-          zoom:state.view.zoom + action.zoomDelta
-        }
+        zoom:state.zoom + action.zoomDelta
       }
     case MAP.ZOOM_OUT:
       //TODO:Check MinZoom
       return {
         ...state,
-        view:{
-          ...state.view,
-          zoom:state.view.zoom - action.zoomDelta
-        }
+        zoom:state.zoom - action.zoomDelta
       }
     default:
       return state

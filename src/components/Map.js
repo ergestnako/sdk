@@ -27,7 +27,8 @@ const mapDispatchToProps = (dispatch) => {
     getMap: map => dispatch(MapActions.getMap(map)),
     setView: (center, zoom) => dispatch(MapActions.setView(center, zoom)),
     setCenter: (center) => dispatch(MapActions.setCenter(center)),
-    setZoom: (zoom) => dispatch(MapActions.setZoom(zoom))
+    setZoom: (zoom) => dispatch(MapActions.setZoom(zoom)),
+    setExtent: (extent) => dispatch(MapActions.setExtent(extent))
   }
 };
 

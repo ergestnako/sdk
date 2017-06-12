@@ -37,3 +37,9 @@
      zoom
    }
  }
+ export const setExtent = (extent) => {
+   return {
+     type: MAP.SET_EXTENT,
+     extent
+   }
+ }

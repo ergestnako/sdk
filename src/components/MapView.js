@@ -13,6 +13,7 @@
  import React from 'react';
  import ReactDOM from 'react-dom';
  import ol from 'openlayers';
+ //import proj from 'ol/proj';
  import './MapPanel.css';
  import {injectIntl, intlShape} from 'react-intl';
  import classNames from 'classnames';
@@ -82,23 +83,40 @@
       let view = map.getView();
       let center = view.getCenter();
       let zoom = view.getZoom();
+      let extent = view.calculateExtent();
       // create a "mapAction" and dispatch it.
       this.props.setCenter(center);
       this.props.setZoom(zoom);
+      this.props.setExtent(extent);
     });
   }
   componentWillUpdate(nextProps, nextState) {
-    const mapView = this.props.map.getView();
-    const stateView = nextProps.mapStore.view;
+    // extent takes precendent over the regular map-view,
+    //if (nextProps && nextProps.mapStore.extent) {
+      // move the map to the new extent.
+    //  this.props.map.getView().fit(nextProps.mapStore.extent);
+    //}
+    // check to see if the view has been altered.
+    if (nextProps && nextProps.mapStore) {
+      const mapView = this.props.map.getView();
+      const stateView = nextProps.mapStore;
 
-    const mapCenter = mapView.getCenter();
-    const mapZoom = mapView.getZoom();
+      const mapCenter = mapView.getCenter();
+      const mapZoom = mapView.getZoom();
+      const mapExtent = mapView.calculateExtent();
+      console.log(mapZoom)
+      console.log(stateView.zoom)
 
-    if (mapCenter[0] !== stateView.center[0] || mapCenter[1] !== stateView.center[1] || mapZoom !== stateView.zoom) {
-      this.props.map.getView().setCenter(stateView.center);
-      this.props.map.getView().setZoom(stateView.zoom);
+      if (mapCenter[0] !== stateView.center[0] || mapCenter[1] !== stateView.center[1]) {
+        mapView.setCenter(stateView.center);
+      }
+      if (mapZoom !== stateView.zoom) {
+        mapView.setZoom(stateView.zoom);
+      }
+      if (mapExtent[0] !== stateView.extent[0] || mapExtent[1] !== stateView.extent[1] || mapExtent[2] !== stateView.extent[2] || mapExtent[3] !== stateView.extent[3]) {
+        mapView.fit(stateView.extent);
+      }
     }
-
   }
   render() {
     return (

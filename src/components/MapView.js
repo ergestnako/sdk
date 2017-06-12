@@ -65,9 +65,12 @@
     super(props);
     this._proxy = context.proxy;
     this._requestHeaders = context.requestHeaders;
+    //sets initial map state tree, off for now
+    /*
     if (this.props.hasOwnProperty('getMap')) {
-      //this.props.getMap(this.props.map);
+      this.props.getMap(this.props.map);
     }
+    */
   }
 
   componentDidMount() {
@@ -77,9 +80,11 @@
     map.on('moveend', () => {
       // get the view of the map
       let view = map.getView();
+      let center = view.getCenter();
+      let zoom = view.getZoom();
       // create a "mapAction" and dispatch it.
-      // this.props.store.dispatch(mapActions.move(view.getCenter(), view.getResolution()));
-      this.props.setView(view.getCenter(), view.getZoom());
+      this.props.setCenter(center);
+      this.props.setZoom(zoom);
     });
   }
   componentWillUpdate(nextProps, nextState) {

@@ -25,3 +25,15 @@
      center, zoom
    }
  }
+ export const setCenter = (center) => {
+   return {
+     type: MAP.SET_CENTER,
+     center
+   }
+ }
+ export const setZoom = (zoom) => {
+   return {
+     type: MAP.SET_ZOOM,
+     zoom
+   }
+ }

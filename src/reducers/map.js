@@ -12,6 +12,22 @@ export default (state = [], action) => {
           zoom:action.zoom
         }
       };
+    case  MAP.SET_CENTER:
+      return {
+        ...state,
+        view:{
+          ...state.view,
+          center:action.center
+        }
+      };
+    case  MAP.SET_ZOOM:
+      return {
+        ...state,
+        view:{
+          ...state.view,
+          zoom:action.zoom
+        }
+      };
     case MAP.ZOOM_IN:
     //TODO:Check MaxZoom
       return {
